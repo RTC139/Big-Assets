@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounting Services - Big Assets Inc.</title>
+    <link rel="stylesheet" href="homepage-style.css">
+    <link rel="stylesheet" href="styles/particles.css">
+    <script src="scripts/light-dark.js" defer></script>
+    <script src="scripts/particles.js" defer></script>
+    <!-- Remove the inline styles that were making particles too bright -->
+</head>
+<body>
+    <!-- Particle container will be inserted by JS -->
+    <nav>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="theme-toggle">
+                <input type="checkbox" id="theme-toggle" />
+                <div class="slider round">
+                    <span class="theme-icon dark-icon">
+                        <img src="Images/moon.png" alt="Dark mode">
+                    </span>
+                    <span class="theme-icon light-icon">
+                        <img src="Images/sun.png" alt="Light mode">
+                    </span>
+                </div>
+            </label>
+        </div>
+        <ul>
+            <li><a href="pages/account.html">Accounting</a></li>
+            <li><a href="pages/tax.html">Tax</a></li>
+            <li><a href="pages/support.html">Support</a></li>
+            <li><a href="pages/assistant.html">Assistant</a></li>
+        </ul>
+        <a href="pages/login.html" class="login-button">LOG IN</a>
+    </nav>
+    
+    <div class="hero">
+        <h1 class="hero-title">Streamline Your<br>finances</h1>
+        
+        <div class="info-columns">
+            <div class="info-column">
+                <p>Estimate taxes, manage expenses and stay compliant with ease</p>
+            </div>
+            <div class="info-column">
+                <p>Simplify taxes, track expenses<br>stay compliant</p>
+            </div>
+        </div>
+        
+        <div class="bottom-bar">
+            <p class="bottom-text">
+                Designed for professionals and businesses, it helps you quickly estimate taxes, 
+                manage expenses, and stay compliant with the latest regulations — all in one 
+                convenient tool.
+            </p>
+            <div class="company-name">BIG A$$ETS INC.</div>
+            <div class="admin-control" style="margin-top: 50px; text-align: center; display: none;">
+                <button onclick="clearAllAccounts()" style="background-color: #d4af37; padding: 10px 20px; color: black; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    Clear All Accounts
+                </button>
+            </div>
+        </div>
+
+        <!-- No Account Modal -->
+<div id="no-account-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeNoAccountModal()">&times;</span>
+        <div class="modal-icon">
+            <img src="Images/Accountant pic.png" alt="Account Required">
+        </div>
+        <h2>Account Required</h2>
+        <p>You need to log in or create an account to access this feature.</p>
+        <div class="modal-buttons">
+            <a href="pages/login.html" class="modal-button primary-button">Log In</a>
+            <a href="pages/signup.html" class="modal-button secondary-button">Sign Up</a>
+        </div>
+    </div>
+</div>
+    
+        <!-- Scripts -->
+        <script>
+            // Function to clear all accounts from localStorage
+            function clearAllAccounts() {
+                // Clear specific account data
+                localStorage.removeItem('accounts');
+                // Clear all data
+                localStorage.clear();
+                console.log('All accounts have been cleared from localStorage');
+                alert('All accounts have been cleared successfully');
+            }
+            
+            // Function to show admin controls - can be called from console with: showAdminControls()
+            function showAdminControls() {
+                document.querySelector('.admin-control').style.display = 'block';
+            }
+            
+            // Function to hide admin controls
+            function hideAdminControls() {
+                document.querySelector('.admin-control').style.display = 'none';
+            }
+
+            // Function to show the no-account modal
+            function showNoAccountModal() {
+                const modal = document.getElementById('no-account-modal');
+                if (modal) {
+                    modal.classList.add('active');
+                    // Prevent scrolling of background content
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            // Function to close the modal
+            function closeNoAccountModal() {
+                const modal = document.getElementById('no-account-modal');
+                if (modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+            // Function to check if user is logged in
+            function checkLoginStatus() {
+                // Get user data from localStorage
+                const userData = localStorage.getItem('currentUser');
+                
+                // If there's no user data, show the modal
+                if (!userData) {
+                    showNoAccountModal();
+                    return false;
+                }
+                return true;
+            }
+
+            // Add event listeners when the DOM is fully loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                // Select all navigation links in the navbar
+                const navLinks = document.querySelectorAll('nav ul li a');
+                
+                // Add click event listener to each navigation link
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        // Always prevent the default navigation
+                        e.preventDefault();
+                        
+                        // Show modal regardless of login status
+                        showNoAccountModal();
+                    });
+                });
+            });
+        </script>
+    </body>
+    </html>

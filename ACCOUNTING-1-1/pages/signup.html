@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="../styles/signup-style.css">
+    <script src="../scripts/storage.js" defer></script>
+    <script src="../scripts/auth.js" defer></script>
+    <script src="../scripts/signup.js" defer></script>
+    <script src="../scripts/light-dark.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="theme-toggle">
+                <input type="checkbox" id="theme-toggle" />
+                <div class="slider round">
+                    <span class="theme-icon dark-icon">
+                        <img src="../Images/moon.png" alt="Dark mode">
+                    </span>
+                    <span class="theme-icon light-icon">
+                        <img src="../Images/sun.png" alt="Light mode">
+                    </span>
+                </div>
+            </label>
+        </div>
+        <h1 class="logo">BIG A$$ETS INC.</h1>
+        <nav>
+            <a href="#" class="nav-link">Support</a>
+            <a href="../homepage.html" class="nav-link">Home</a>
+        </nav>
+    </header>
+    <div class="element-class"></div>
+    <main class="signup-container">
+        <div class="signup-box">
+            <h2>Make an account!</h2>
+            <p class="signup-subtitle">Sign in</p>
+            <form id="signup-form">
+                <input type="text" class="input-field" id="username" placeholder="Please type your username here" required>
+                
+                <!-- Email field - make sure it's properly captured -->
+                <input type="email" class="input-field" id="email" placeholder="Please enter your email address" required>
+                
+                <!-- Password field with toggle button -->
+                <div class="password-container">
+                    <input type="password" class="input-field" id="password" placeholder="Please type your password here" required>
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password', this)">Show</button>
+                </div>
+                
+                <!-- Confirm password field with toggle button -->
+                <div class="password-container">
+                    <input type="password" class="input-field" id="confirm-password" placeholder="Please confirm your password here" required>
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirm-password', this)">Show</button>
+                </div>
+                
+                <button type="submit" class="signup-button">Sign up</button>
+            </form>
+            <p class="signup-redirect">Have an existing account? <a href="login.html">Click here to login.</a></p>
+        </div>
+    </main>
+    <style>
+        /* Password field container */
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        /* Toggle button styling */
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        /* Message styling */
+        .message {
+            margin: 5px 0 10px;
+            font-size: 14px;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .error-message {
+            color: #d9534f;
+        }
+        
+        .success-message {
+            color: #5cb85c;
+        }
+    </style>
+</body>
+</html>
