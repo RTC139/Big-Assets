@@ -1,0 +1,524 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-image) no-repeat left center fixed;
+    background-size: cover;
+    z-index: -2;
+}
+
+/* Add this for the dark mode overlay */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-overlay);
+    z-index: -1; /* Place it between background (-2) and content */
+    pointer-events: none;
+    transition: background 0.3s ease;
+}
+
+/* Updated Navigation styles from style.css */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 35px;
+    background-color: var(--nav-bg);
+    position: relative;
+    z-index: 10;
+    height: 60px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 7px;  /* Reduced from 10px */
+    margin-left: 70px;  /* Reduced from 100px */
+}
+
+nav ul li {
+    margin: 0 100px 0 0;  /* Reduced from 150px */
+}
+
+nav ul li a {
+    color: var(--nav-text-color);
+    text-decoration: none;
+    font-style: italic;
+    font-size: 26px;
+    font-weight: 400;
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: inline-block;
+    position: relative;
+    text-shadow: 
+        -1px -1px 0 var(--nav-text-shadow-color),
+        1px -1px 0 var(--nav-text-shadow-color),
+        -1px 1px 0 var(--nav-text-shadow-color),
+        1px 1px 0 var(--nav-text-shadow-color);
+    background: transparent;
+}
+
+nav ul li a:hover {
+    transform: scale(1.15);
+    text-decoration: none;
+}
+
+/* Sliding underline effect */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+.menu-icon {
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+.login-button {
+    background-color: var(--login-bg);
+    color: var(--login-text);
+    padding: 10px 25px;  
+    border-radius: 25px;  
+    border: 2px solid var(--login-border);
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 22px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: var(--login-hover-bg);
+    color: var(--login-hover-text);
+    transform: scale(1.05);
+}
+
+.hero {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 50px;
+    margin-top: -60px;
+    padding-left: 300px;
+    z-index: 2;
+}
+
+.hero-title, .info-columns, .info-column, .bottom-bar {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    color: var(--hero-title-color);
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin-left: 60px;
+    text-shadow: 
+        -1px -1px 0 var(--hero-text-shadow),
+        1px -1px 0 var(--hero-text-shadow),
+        -1px 1px 0 var(--hero-text-shadow),
+        1px 1px 0 var(--hero-text-shadow);
+    background: transparent;
+}
+
+.info-columns {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    margin-left: 60px;
+}
+
+.info-column {
+    max-width: 400px;
+    color: var(--text-color);
+    font-size: 18px;
+    line-height: 1.4;
+    border-left: 5px solid var(--info-border);
+    padding-left: 15px;
+    text-shadow: 
+        -1px -1px 0 var(--info-text-shadow),
+        1px -1px 0 var(--info-text-shadow),
+        -1px 1px 0 var(--info-text-shadow),
+        1px 1px 0 var(--info-text-shadow);
+    background: transparent;
+}
+
+.bottom-bar {
+    background-color: var(--bottom-bar-bg);
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 60px; 
+    width: 88%; 
+    left: 56%; 
+    transform: translateX(-50%); 
+}
+
+.bottom-text {
+    color: var(--light-text);
+    max-width: 600px;
+    line-height: 1.4;
+}
+
+.company-name {
+    color: var(--light-text);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 48px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #737373;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+    overflow: hidden; /* Hide icons that would appear outside slider */
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 3px;
+    content: "";
+    height: 18px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 18px;
+    z-index: 2; /* Ensure the ball is above icons */
+}
+
+input:checked + .slider {
+    background-color: #2b2d42;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dark-icon {
+    left: 6px;
+}
+
+.light-icon {
+    right: 6px;
+}
+
+.theme-icon img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+
+/* Make the sun icon bigger */
+.light-icon img {
+    width: 17px;
+    height: 17px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+    nav ul li {
+        margin: 0 50px 0 0;  /* Further reduced spacing */
+    }
+    
+    nav ul li a {
+        font-size: 20px;  /* Reduced from 24px */
+    }
+    
+    .login-button {
+        font-size: 20px;  /* Reduced from 24px */
+        padding: 8px 20px;  /* Reduced padding */
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-icon {
+        display: block;
+    }
+    
+    nav ul {
+        display: none;
+    }
+    
+    .login-button {
+        font-size: 20px;
+        padding: 10px 25px;
+    }
+    
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .info-columns {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* Add a new CSS variable for text shadow color */
+:root {
+    /* Light mode variables (default) */
+    --bg-overlay: none;
+    --bg-image: url('Images/homepage.png');
+    --nav-bg: rgba(78, 78, 78, 0.5);
+    --text-color: #000000;
+    --light-text: #ffffff;
+    --nav-text-color: #fff;
+    --nav-text-shadow-color: black;
+    --hero-text-shadow: black;
+    --hero-title-color: #ffcb05;
+    --bottom-bar-bg: rgba(42, 62, 72, 0.8);
+    --login-bg: white;
+    --login-text: #000;
+    --login-border: white;
+    --login-hover-bg: #000;
+    --login-hover-text: white;
+    --info-border: rgb(0, 0, 0);
+    --info-text-shadow: white; /* Add text shadow color variable */
+}
+
+[data-theme="dark"] {
+    /* Dark mode variables */
+    --bg-overlay: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    --bg-image: url('Images/homepage dark.png');  
+    --nav-bg: rgba(40, 40, 40, 0.8);
+    --nav-text-color: #ffcd05;
+    --nav-text-shadow-color: rgb(0, 0, 0);
+    --text-color: #e0e0e0;
+    --light-text: #ffffff;
+    --hero-title-color: #ffd83d;
+    --bottom-bar-bg: rgba(30, 40, 50, 0.9);
+    --login-bg: #000000;
+    --login-text: #ffffff;
+    --login-border: #ffffff;
+    --login-hover-bg: #ffffff;
+    --login-hover-text: #000000;
+    --info-border: rgb(255, 255, 255);
+    --info-text-shadow: black; /* Set text shadow to black in dark mode */
+}
+
+/* Add overlay for dark mode */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-overlay);
+    z-index: 1;
+    pointer-events: none;
+    transition: background 0.3s ease;
+}
+
+/* No Account Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    color: #333;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+[data-theme="dark"] .modal-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .close-button:hover {
+    color: #ccc;
+}
+
+.modal-icon {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-icon img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.modal h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #222;
+    text-align: center;
+}
+
+[data-theme="dark"] .modal h2 {
+    color: #fff;
+}
+
+.modal p {
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-button {
+    padding: 10px 25px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.primary-button {
+    background-color: #007BFF;
+    color: white;
+}
+
+.primary-button:hover {
+    background-color: #0056b3;
+}
+
+.secondary-button {
+    background-color: transparent;
+    color: #007BFF;
+    border: 2px solid #007BFF;
+}
+
+.secondary-button:hover {
+    background-color: #f0f8ff;
+    color: #0056b3;
+    border-color: #0056b3;
+}
+
+[data-theme="dark"] .secondary-button:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

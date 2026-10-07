@@ -1,0 +1,426 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+html, body {
+    overflow: hidden;  
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Add this for the background handling */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-image) no-repeat left center fixed;
+    background-size: cover;
+    z-index: -2;
+}
+
+/* Add this for the dark mode overlay */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-overlay);
+    z-index: -1;
+    transition: background 0.3s ease;
+}
+
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: var(--header-background); /* Uses the variable */
+    width: 100%;
+    height: 90px;
+    box-sizing: border-box;
+    position: relative;
+    top: 0;
+    left: 0;
+    transition: background-color 0.3s ease; /* Add transition for smooth color change */
+}
+
+.element-class {
+    background-image: url('../Images/calculator.png'); /* If image is in the project root */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right center;
+    width: 700px;
+    height: 600px;
+    position: absolute;
+    top: 250px; /* Adjust as needed */
+    left: 930px; /* Adjust as needed */
+    max-height: calc(100vh - 120px);
+}
+
+/* Logo styling */
+.logo {
+    font-size: 40px; /* Smaller font size to match image */
+    font-weight: bold;
+    color: white;
+    position: relative;
+    text-shadow: 
+        -2px -2px 0 black,  
+        2px -2px 0 black,   
+        -2px 2px 0 black,   
+        2px 2px 0 black,
+        -2px 0 0 black,     
+        2px 0 0 black,      
+        0 -2px 0 black,
+        0 2px 0 black;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    top: 0; /* Reset the negative positioning */
+}
+
+/* Nav container */
+nav {
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation links */
+.nav-link {
+    color: var(--nav-text-color); /* Use variable instead of hardcoded white */
+    text-decoration: none;
+    margin-left: 100px;
+    font-size: 25px;
+    font-style: italic;
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: inline-block;
+    position: relative; /* Added for the underline effect */
+    text-shadow: 
+        -1px -1px 0 var(--nav-text-shadow-color),
+        1px -1px 0 var(--nav-text-shadow-color),
+        -1px 1px 0 var(--nav-text-shadow-color),
+        1px 1px 0 var(--nav-text-shadow-color);
+    background: transparent;
+}
+
+.nav-link:hover {
+    transform: scale(1.15);
+    text-decoration: none;
+}
+
+/* Sliding underline effect */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background-color: #ffffff;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.login-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: calc(100vh - 90px);  /* Subtract header height */
+    padding-left: 5%;  /* Use percentage instead of fixed pixels */
+    width: 95%;  /* Constrain width */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.login-box {
+    background-color: var(--box-background);
+    border-radius: 10px;
+    padding: 20px 60px;
+    width: 550px;
+    text-align: center;
+    color: var(--text-color);
+    border: 4px solid #333;
+}
+
+.login-box h2 {
+    font-size: 50px; /* Keep the font size */
+    line-height: 1.2; /* Adjust line height */
+    margin-top: 0; /* Remove extra spacing above the heading */
+    padding-top: 10px; /* Add minimal padding if needed */
+    margin-bottom: 10px; /* Keep spacing below the heading */
+}
+
+.login-subtitle {
+    font-size: 20px; 
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--subtitle-color);
+    font-weight: bold;
+    font-style: italic;
+}
+
+.input-field {
+    width: 100%; /* Full width of the container */
+    padding: 12px; /* Adjust padding for input fields */
+    margin: 10px 0; /* Spacing between input fields */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Adjust font size */
+    background-color: #000; /* Set background to black */
+    color: #fff; /* Set text color to white */
+    caret-color: #fff; /* Set the cursor color to white */
+}
+
+.input-field::placeholder {
+    color: #fff; /* Set placeholder text color to white */
+    opacity: 1; /* Ensure full opacity for the placeholder */
+}
+
+.forgot-password {
+    display: block; /* Ensure it appears on its own line */
+    margin-top: -5px; /* Reduce the space above the link to bring it closer to the password box */
+    margin-bottom: 20px; /* Increase the space below the link to push it farther from the login button */
+    font-size: 14px; /* Adjust font size */
+    color: #007BFF; /* Blue color for the link */
+    text-decoration: none; /* Remove underline */
+    text-align: left; /* Align the text */
+    font-weight: bold; /* Make the text bold */
+    font-style: italic; /* Make the text italic */
+}
+
+.forgot-password:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+.login-button {
+    width: auto; /* Change from 100% to auto for a smaller width */
+    padding: 8px 130px; /* Reduce padding for a smaller button */
+    font-size: 16px; /* Adjust font size to make it smaller */
+    font-style: italic; /* Make the button text italic */
+    background-color: #333; /* Keep the same background color */
+    color: #fff; /* Keep the same text color */
+    border: none; /* Keep border removed */
+    border-radius: 5px; /* Keep rounded corners */
+    cursor: pointer; /* Keep pointer cursor on hover */
+}
+
+.login-button:hover {
+    background-color: #000000; /* Darker blue on hover */
+}
+
+.signup-redirect a {
+    color: #007BFF; /* Blue color for the link */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Make the text bold */
+    font-style: italic; /* Make the text italic */
+}
+
+.signup-redirect a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+.signup-redirect a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+:root {
+    /* Light mode variables (default) */
+    --bg-image: url('../Images/2nd page light.png');
+    --bg-overlay: none;
+    --nav-text-color: white;
+    --nav-text-shadow-color: black;
+    --text-color: #333;
+    --box-background: #fff;
+    --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    --input-background: #000;
+    --input-text: #fff;
+    --header-background: rgba(78, 78, 78, 0.5); /* Changed to match homepage --nav-bg */
+    --button-background: #333;
+    --button-hover: #000000;
+    --link-color: #007BFF;
+    --subtitle-color: #333;
+    --box-border: #333;
+}
+
+[data-theme="dark"] {
+    /* Dark mode variables */
+    --bg-image: url('../Images/2nd page.png');
+    --bg-overlay: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+    --nav-text-color: #ffcd05; /* Changed to match homepage dark mode */
+    --nav-text-shadow-color: rgb(0, 0, 0); /* Changed to match homepage dark mode */
+    --text-color: #e0e0e0;
+    --box-background: #1e1e1e;
+    --box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    --input-background: #333;
+    --input-text: #fff;
+    --header-background: rgba(40, 40, 40, 0.8); /* Changed to match homepage --nav-bg */
+    --button-background: #007BFF;
+    --button-hover: #0056b3;
+    --link-color: #00aaff;
+    --subtitle-color: #fff;
+    --box-border: #fff;
+}
+
+.login-box {
+    background-color: var(--box-background);
+    border-radius: 10px;
+    padding: 20px 60px;
+    width: 550px;
+    text-align: center;
+    color: var(--text-color);
+    border: 4px solid var(--box-border); /* Use the variable here */
+}
+
+/* Apply theme variables to elements */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--background-color);
+    background-size: cover;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.header {
+    background-color: var(--header-background);
+}
+
+.login-box {
+    background-color: var(--box-background);
+    color: var(--text-color);
+}
+
+.input-field {
+    background-color: var(--input-background);
+    color: var(--input-text);
+}
+
+.login-button {
+    background-color: var(--button-background);
+}
+
+.login-button:hover {
+    background-color: var(--button-hover);
+}
+
+.forgot-password, .signup-redirect a {
+    color: var(--link-color);
+}
+
+/* Theme toggle button styling */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 48px;
+    margin-right: 15px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #737373;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 3px;
+    content: "";
+    height: 18px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 18px;
+    z-index: 2;
+}
+
+input:checked + .slider {
+    background-color: #2b2d42;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.theme-icon img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+
+/* Make the sun icon bigger */
+.light-icon img {
+    width: 17px;
+    height: 17px;
+}
+
+@media (max-width: 1200px) {
+    .login-box {
+        width: 90%;
+        max-width: 550px;
+    }
+    
+    .element-class {
+        opacity: 0.5;  /* Make background image more subtle on smaller screens */
+    }
+}
+
+/* Hide calculator image on very small screens */
+@media (max-width: 768px) {
+    .element-class {
+        display: none;
+    }
+    
+    .login-container {
+        justify-content: center;
+        padding-left: 0;
+    }
+}

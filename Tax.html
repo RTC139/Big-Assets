@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Philippine Income Tax Calculator</title>
+  <link rel="stylesheet" href="../styles/tax-style.css">
+  <link rel="stylesheet" href="../styles/theme-compatibility.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Add light-dark.js for centralized theme control -->
+  <script src="../scripts/light-dark.js" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load master theme on page load
+      const masterTheme = localStorage.getItem('master-theme') || 'light';
+      console.log('Tax.html: Loading master theme:', masterTheme);
+      
+      // Apply theme on load
+      if (masterTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.documentElement.classList.add('dark-mode');
+      } else {
+        document.body.removeAttribute('data-theme');
+        document.documentElement.classList.add('light-mode');
+      }
+      
+      // Listen for theme changes
+      document.addEventListener('themeChanged', function(e) {
+        console.log('Tax.html: Theme changed to:', e.detail.theme);
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="logo">B1G A$$ETS INC.</div>
+    <!-- Theme toggle is hidden by light-dark.js, but kept for structure -->
+    <div class="theme-switch-wrapper" style="visibility: hidden;">
+      <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider round">
+          <div class="theme-icon dark-icon">
+            <img src="../Images/moon.png" alt="Dark Mode">
+          </div>
+          <div class="theme-icon light-icon">
+            <img src="../Images/sun.png" alt="Light Mode">
+          </div>
+        </div>
+      </label>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../homepage2.html">Home</a></li>
+        <li><a href="Statistics.html">Market</a></li>
+        <li><a href="Accounting.html">Budget</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="cell-container"></div>
+
+  <div class="wrapper">
+    <div class="instructions">
+      <h2>How to Use the Tax Calculator</h2>
+      <div class="category" onclick="toggleCategory(this)">Step 1: Enter Your Income</div>
+      <div class="description">Enter your total monthly income in the "Enter Your Income" box.</div>
+
+      <div class="category" onclick="toggleCategory(this)">Step 2: Add Mandatory Contributions</div>
+      <div class="description">Enter your SSS, PhilHealth, and Pag-IBIG contributions (if applicable).</div>
+
+      <div class="category" onclick="toggleCategory(this)">Step 3: Non-Taxable Benefits</div>
+      <div class="description">Enter any non-taxable benefits (e.g., 13th Month pay, Rice Subsidy, etc.).</div>
+
+      <div class="category" onclick="toggleCategory(this)">Step 4: Calculate Tax</div>
+      <div class="description">Click the "CALCULATE" button to see your tax calculation, tax owed, and take-home pay.</div>
+
+      <div class="category" onclick="toggleCategory(this)">Step 5: View Results</div>
+      <div class="description">The graph will show your income, tax owed, and take-home pay for easy visualization.</div>
+    </div>
+
+    <div class="container">
+      <div class="calculator">
+        <div class="inputs">
+          <div>
+            <label for="income">Enter Your Monthly Income</label>
+            <input type="number" id="income" placeholder="e.g. 100000">
+          </div>
+          <div>
+            <label for="sss">SSS Contribution</label>
+            <input type="number" id="sss" placeholder="e.g. 500" value="0">
+          </div>
+          <div>
+            <label for="philhealth">PhilHealth Contribution</label>
+            <input type="number" id="philhealth" placeholder="e.g. 300" value="0">
+          </div>
+          <div>
+            <label for="pagibig">Pag-IBIG Contribution</label>
+            <input type="number" id="pagibig" placeholder="e.g. 100" value="0">
+          </div>
+          <div>
+            <label for="nonTaxable">Non-Taxable Benefits (13th Month, etc.)</label>
+            <input type="number" id="nonTaxable" placeholder="e.g. 50000" value="0">
+          </div>
+        </div>
+        <button class="btn" onclick="computePay()">CALCULATE</button>
+      </div>
+
+      <div class="results-container">
+        <div class="result-box" id="screenDisplay">₱0.00</div>
+        <div class="result-box" id="taxOwed">₱0.00 Tax Owed</div>
+      </div>
+      
+      <div class="result-box full-width" id="takeHomePay">₱0.00 Take-home Pay</div>
+
+      <div class="graph-container">
+        <canvas id="taxChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/Tax.js"></script>
+  <script src="../scripts/translation.js" defer></script>
+</body>
+</html>

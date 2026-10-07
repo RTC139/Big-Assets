@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="../styles/login-style.css">
+    <script src="../scripts/storage.js" defer></script>
+    <script src="../scripts/auth.js" defer></script>
+    <script src="../scripts/login.js" defer></script>
+    <script src="../scripts/light-dark.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="theme-toggle">
+                <input type="checkbox" id="theme-toggle" />
+                <div class="slider round">
+                    <span class="theme-icon dark-icon">
+                        <img src="../Images/moon.png" alt="Dark mode">
+                    </span>
+                    <span class="theme-icon light-icon">
+                        <img src="../Images/sun.png" alt="Light mode">
+                    </span>
+                </div>
+            </label>
+        </div>
+        <h1 class="logo">BIG A$$ETS INC.</h1>
+        <nav>
+            <a href="#" class="nav-link">Support</a>
+            <a href="../homepage.html" class="nav-link">Home</a>
+        </nav>
+    </header>
+    <div class="element-class"></div>
+    <main class="login-container">
+        <div class="login-box">
+            <h2>Welcome back user!</h2>
+            <p class="login-subtitle">Login</p>
+            <form id="login-form">
+                <div class="login-option-container">
+                    <div class="login-option-tabs">
+                        <button type="button" class="login-tab active" data-target="username">Username</button>
+                        <button type="button" class="login-tab" data-target="email">Email</button>
+                    </div>
+                    
+                    <div id="username-field" class="login-field active">
+                        <input type="text" class="input-field" id="username" placeholder="Please type your username here" required>
+                    </div>
+                    
+                    <div id="email-field" class="login-field">
+                        <input type="email" class="input-field" id="email" placeholder="Please type your email here">
+                    </div>
+                </div>
+                
+                <!-- Password field with toggle button -->
+                <div class="password-container">
+                    <input type="password" class="input-field" id="password" placeholder="Please type your password here" required>
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password', this)">Show</button>
+                </div>
+                
+                <a href="#" class="forgot-password">Forgot your password?</a>
+                <button type="submit" class="login-button">Log in</button>
+            </form>
+            <p class="signup-redirect">No account? <a href="signup.html">Click here to register.</a></p>
+        </div>
+    </main>
+    <style>
+        /* Password field container */
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        /* Toggle button styling */
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        /* Message styling */
+        .message {
+            margin: 5px 0 10px;
+            font-size: 14px;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .error-message {
+            color: #d9534f;
+        }
+        
+        .success-message {
+            color: #5cb85c;
+        }
+        
+        /* Tab styling for login options */
+        .login-option-container {
+            margin-bottom: 15px;
+        }
+        
+        .login-option-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .login-tab {
+            padding: 8px 15px;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .login-tab.active {
+            border-bottom: 2px solid #007bff;
+            color: #007bff;
+            font-weight: bold;
+        }
+        
+        .login-field {
+            display: none;
+        }
+        
+        .login-field.active {
+            display: block;
+        }
+    </style>
+    <script>
+        // Password visibility toggle function
+        function togglePasswordVisibility(inputId, buttonElement) {
+            const passwordInput = document.getElementById(inputId);
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                buttonElement.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                buttonElement.textContent = 'Show';
+            }
+        }
+
+        // Setup login option tabs
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set the theme based on master theme
+            const masterTheme = localStorage.getItem('master-theme') || 'light';
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            if (masterTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                if (themeToggle) themeToggle.checked = true;
+            }
+            
+            // Make toggle appear to work but not change master settings
+            if (themeToggle) {
+                themeToggle.addEventListener('change', function(e) {
+                    if (e.target.checked) {
+                        document.body.setAttribute('data-theme', 'dark');
+                    } else {
+                        document.body.removeAttribute('data-theme');
+                    }
+                    // Note: We don't save the setting here
+                });
+            }
+            
+            const tabs = document.querySelectorAll('.login-tab');
+            const usernameField = document.getElementById('username');
+            const emailField = document.getElementById('email');
+            const usernameFieldContainer = document.getElementById('username-field');
+            const emailFieldContainer = document.getElementById('email-field');
+            
+            // Fix: Make sure event listeners are properly set up
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent default button behavior
+                    
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Get the target field
+                    const target = this.getAttribute('data-target');
+                    
+                    // Hide all fields and disable their required attribute
+                    usernameFieldContainer.classList.remove('active');
+                    emailFieldContainer.classList.remove('active');
+                    usernameField.removeAttribute('required');
+                    emailField.removeAttribute('required');
+                    
+                    // Show the selected field and make it required
+                    if (target === 'username') {
+                        usernameFieldContainer.classList.add('active');
+                        usernameField.setAttribute('required', '');
+                        emailField.removeAttribute('required');
+                    } else {
+                        emailFieldContainer.classList.add('active');
+                        emailField.setAttribute('required', '');
+                        usernameField.removeAttribute('required');
+                    }
+                    
+                    console.log('Switched to tab:', target);
+                    console.log('Username field visible:', usernameFieldContainer.classList.contains('active'));
+                    console.log('Email field visible:', emailFieldContainer.classList.contains('active'));
+                });
+            });
+            
+            // Form submission handler - Don't use cloneNode as it loses event listeners for tabs
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                // Remove previous listeners - an alternative approach
+                loginForm.onsubmit = null;
+                
+                // Add event listener
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const password = document.getElementById('password').value;
+                    const activeTab = document.querySelector('.login-tab.active').getAttribute('data-target');
+                    
+                    console.log('Form submitted. Active tab:', activeTab);
+                    
+                    if (activeTab === 'username') {
+                        // Username login
+                        const username = document.getElementById('username').value;
+                        handleUsernameLogin(username, password);
+                    } else {
+                        // Email login
+                        const email = document.getElementById('email').value.trim();
+                        handleEmailLogin(email, password);
+                    }
+                });
+            }
+            
+            // Helper functions for login
+            function handleUsernameLogin(username, password) {
+                console.log('Attempting username login with:', username);
+                const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+                const account = accounts.find(acc => acc.username === username && acc.password === password);
+                
+                if (account) {
+                    loginSuccess(account, accounts);
+                } else {
+                    loginFailed('username');
+                }
+            }
+            
+            function handleEmailLogin(email, password) {
+                console.log('Attempting email login with:', email);
+                const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+                
+                accounts.forEach((acc, i) => {
+                    if (acc.email) {
+                        console.log(`Account ${i} email: ${acc.email.toLowerCase()}, input: ${email.toLowerCase()}`);
+                        console.log(`Match: ${acc.email.toLowerCase() === email.toLowerCase()}`);
+                    }
+                });
+                
+                const account = accounts.find(acc => {
+                    return acc.email && 
+                           acc.email.toLowerCase().trim() === email.toLowerCase().trim() && 
+                           acc.password === password;
+                });
+                
+                if (account) {
+                    loginSuccess(account, accounts);
+                } else {
+                    loginFailed('email');
+                }
+            }
+            
+            function loginSuccess(account, accounts) {
+                console.log('Login successful:', account);
+                setUserData(account);
+                account.lastLogin = new Date().toISOString();
+                localStorage.setItem('accounts', JSON.stringify(accounts));
+                window.location.href = '../homepage2.html';
+            }
+            
+            function loginFailed(type) {
+                console.error(`${type} login failed`);
+                alert(`Incorrect ${type} or password. Please try again.`);
+            }
+        });
+        
+        // Ensure we have a helper function to check account data in console
+        function checkAccounts() {
+            const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+            console.table(accounts);
+            return accounts;
+        }
+    </script>
+</body>
+</html>
